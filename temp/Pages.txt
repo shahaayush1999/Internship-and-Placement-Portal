@@ -1,0 +1,77 @@
+Views:
+1. Student
+2. Faculty
+3. TnP officer - almost admin
+4. Database Admin (Super Admin)
+5. Company
+6. Guest
+
+Pages:
+
+Generic
+1. Login page
+	-MIS for students, username for teachers/companies
+	-password
+	-forgot password button
+	-Guest login
+2. Forgot password
+	-Enter email ID for randomly generated new password
+3. Fill profile information
+4. Home Page which redirects to child pages
+5. View list of companies
+	-company wise job offers
+6. View Job offers
+	-Filter by company
+	-link to view job offer details
+
+Student
+0. Home page
+	See if already placed for academic year
+	See applied companies
+	See companies qualified for interview that still remain
+	Change personal information
+	Change password
+1. View companies
+	View job offer in detail
+	Apply button
+		-If matches CGPA, branch, backlog criteria, year
+		-If not debarred
+		-If company not applied already
+		-If company offer open
+		-If not already placed for that academic year
+	Filter button
+		-Filter by branch
+	Sort button
+		-By salary
+		-By recent
+
+Faculty
+0. Home page
+1. View companies and placement records
+2. View current job offers
+	Filter department wise
+
+TnP officer - almost admin
+0. Home page
+	See percentage placement per branch per year
+	Export placement reports
+1. View placement records
+	Sort by year
+	Sort by company
+2. View companies
+	Create new company
+		-Auto generate login ID, password and mail it to TnP officer, company
+	View job offer in detail and modify job criteria
+4. View list of students sorted by year, branch
+	Debar student from placement
+	Inform HOD, student via email
+
+Database Admin (Super Admin)
+0. Home page
+
+
+Company
+0. Home page
+
+Guest
+0. Home page

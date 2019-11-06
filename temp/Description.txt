@@ -1,0 +1,39 @@
+Everyone
+*Can register on the internship portal
+*Update their profile details
+
+Student
+*Sync database with COEP database?
+*Can apply for companies:
+	-Apply button blurred or not depending on CGPA criteria
+	-Filter companies based on job profiles
+	-View list of companies and job offers on campus
+	-If he is not debarred from placement
+
+Faculty
+*Can view placement record
+*Can view company offers
+
+TnP officer (Almost Admin)
+*Backup and export records
+*Generate pdf of placement records per company
+*Debar/Allow student from placement/internship (Inform HOD via email)
+*Make exceptions to rules like CGPA criteria
+*Add students/companies account
+*Blacklist companies
+*View list of companies with their user ID
+*View list of students with their user ID
+*See percentage placement
+
+Database Admin (Super Admin)
+*CRUD all the database tables entries
+
+
+Company
+*Can register as a company for placement at COEP
+*Can CRUD job profiles
+*Can view placement record and get contact details of all students
+
+Guest
+*Can see details of companies
+*Can see placement/intership records
