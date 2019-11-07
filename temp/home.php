@@ -26,34 +26,32 @@ if (isset($_POST)) {
 
 </head>
 <body>
-	<form action="home.php" method="POST">
-	    <table class="table table-striped">
-	    	<thead class="thead-dark">
-		    	<tr>
-		    		<th>ID</th>
-		    		<th>Name</th>
-		    		<th>Delete</th>
-		    	</tr>
-	    	</thead>
-	    	<tbody>
-	    		<?php
-		    		$sql = "SELECT branch_id, branch_name FROM branch ORDER BY branch_id";
-					$result = $conn->query($sql);
-					if ($result->num_rows > 0) {
-					    // output data of each row
-					    while($row = $result->fetch_assoc()) {
-					        echo "<tr><td>".$row["branch_id"]."</td><td>".$row["branch_name"]."</td>";
-					        echo "<td><button name=\"delete_".$row['branch_id']."\">Delete</td>";
-					        echo '</tr>';
-					    }
-					    echo "</table>";
-					} else {
-						echo "0 results";
-					}
-	    		?>
-	    	</tbody>
-		</table>
-	</form>
-
+    <table class="table table-striped">
+    	<thead class="thead-dark">
+	    	<tr>
+	    		<th>ID</th>
+	    		<th>Name</th>
+	    		<th>Delete</th>
+	    	</tr>
+    	</thead>
+    	<tbody>
+    		<?php
+	    		$sql = "SELECT branch_id, branch_name FROM branch ORDER BY branch_id";
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+				    // output data of each row
+				    while($row = $result->fetch_assoc()) {
+				        echo "<tr><td>".$row["branch_id"]."</td><td>".$row["branch_name"]."</td>";
+				        echo "<td><button name=\"delete_".$row['branch_id']."\">Delete</td>";
+				        echo '</tr>';
+				    }
+				    echo "</table>";
+				} else {
+					echo "0 results";
+				}
+    		?>
+    	</tbody>
+	</table>
+</body>
 </html>
 <?php $conn->close(); ?>

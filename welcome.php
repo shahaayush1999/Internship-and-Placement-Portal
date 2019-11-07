@@ -1,5 +1,6 @@
 <?php
 	include('session.php');
+	include('config.php');
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +44,32 @@
 				<a href = "logout.php" class="btn btn-danger my-2 my-sm-0" type="submit">Sign Out</a>
 			</div>
 		</nav>
+		<table class="table table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$sql = "SELECT branch_id, branch_name FROM branch ORDER BY branch_id";
+					$result = $con->query($sql);
+					if ($result->num_rows > 0) {
+						// output data of each row
+						while($row = $result->fetch_assoc()) {
+							echo "<tr><td>".$row["branch_id"]."</td><td>".$row["branch_name"]."</td>";
+							echo "<td><button name=\"delete_".$row['branch_id']."\">Delete</td>";
+							echo '</tr>';
+						}
+						echo "</table>";
+					} else {
+						echo "0 results";
+					}
+				?>
+			</tbody>
+		</table>
 
 
 		<!-- <h1>you are logged in as a <?php if($login_role == 0) echo 'Student'; else echo 'Faculty'?></h1> -->
