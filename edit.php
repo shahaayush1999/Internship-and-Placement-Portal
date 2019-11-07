@@ -1,5 +1,6 @@
+
 <?php
-	include('session.php');
+ include('session.php');
 //include 'config.php';
 $servername = "localhost";
 $usrname = "root";
@@ -8,67 +9,68 @@ $database = "internship_portal";
 
  $con = mysqli_connect($servername, $usrname, $usrpass, $database);
  if(!$con){
-   die('Connection Failed : '. mysqli_connect_error());
-   echo "Error";
+	 die('Connection Failed : '. mysqli_connect_error());
+	 echo "Error";
  }else{
-  echo"Connected";
+	echo"Connected";
  }
 
-$fname = $mname = $lname = $pno = $email = $live = $dead = $prev_int = $b_id = $cgpa = $batch = $curr_year = "";
+//$fname = $mname = $lname = $pno = $email = $live = $dead = $prev_int = $b_id = $cgpa = $batch = $curr_year = "";
 
-if(isset($_POST['fname'])){
-  $fname = $_POST['fname'];
-}
-if(isset($_POST['mname'])){
-  $mname = $_POST['mname'];
-}
-if(isset($_POST['lname'])){
-  $lname = $_POST['lname'];
-}
-if(isset($_POST['pnumber'])){
-  $pno = $_POST['pnumber'];
-}
-if(isset($_POST['email'])){
-  $email = $_POST['email'];
-}
-if(isset($_POST['live'])){
-  $live = $_POST['live'];
-}
-if(isset($_POST['dead'])){
-  $dead = $_POST['dead'];
-}
-if(isset($_POST['pint'])){
-  $prev_int = $_POST['pint'];
-}
-if(isset($_POST['bid'])){
-  $b_id = $_POST['bid'];
-}
-if(isset($_POST['cgpa'])){
-  $cgpa = $_POST['cgpa'];
-}
-if(isset($_POST['batch'])){
-  $batch = $_POST['batch'];
-}
-if(isset($_POST['year'])){
-  $curr_year = $_POST['year'];
-}
+	if(isset($_POST['fname'])){
+		$fname = $_POST["fname"];
+ 	echo "$fname";
+	}else {echo "Error";}
+
+	$mname = $_POST['mname'];
+
+	$lname = $_POST['lname'];
+
+	$pno = $_POST['pnumber'];
+
+	$email = $_POST['email'];
+
+	$live = $_POST['live'];
+
+	$dead = $_POST['dead'];
+
+	$prev_int = $_POST['pint'];
+
+	$b_id = $_POST['bid'];
+
+	$cgpa = $_POST['cgpa'];
+
+	$batch = $_POST['batch'];
+
+	$curr_year = $_POST['year'];
+
 
 
 
 $query = "INSERT INTO `student`(`mis`, `first_name`, `middle_name`, `last_name`, `number`, `email`, `live_back`, `dead_back`, `previous_internships`, `branch_id`, `cgpa`, `batch`, `current_year`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 if($stmt = $con->prepare($query)){
-  $stmt->bind_param("sssssssssssss", $login_mis, $fname, $mname, $lname, $pno, $email, $live, $dead, $prev_int, $b_id, $cgpa, $batch, $curr_year);
-  $stmt->execute();
+	$stmt->bind_param("sssssssssssss", $login_mis, $fname, $mname, $lname, $pno, $email, $live, $dead, $prev_int, $b_id, $cgpa, $batch, $curr_year);
+	$stmt->execute();
 
-  /*mysqli_query($stmt);
-  $rc = mysqli_affected_rows();;
-  echo "$rc";*/
-  }else {
-    $error = "Not connected";
-    echo "$error";
-  }
+	/*mysqli_query($stmt);
+	$rc = mysqli_affected_rows();;
+	echo "$rc";*/
+	}else {
+		$error = "Not connected";
+		echo "$error";
+	}
+
+
+/*$sql = "SELECT `branch_id`FROM `branch`";
+$result = mysqli_query($con, $sql);
+
+echo "<select name='branch_id'>";
+while ($row = mysqli_fetch_array($result)) {
+		echo "<option value='" . $row['branch_id'] ."'>" . $row['branch_id'] ."</option>";
+}
+echo "</select>";*/
+
 ?>
-
 
 
 
@@ -79,10 +81,14 @@ if($stmt = $con->prepare($query)){
      <meta charset="utf-8">
      <title>Edit</title>
      	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-   </head>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> </script>
+	 </head>
    <body>
+
      <h2>Edit Profile</h2>
-     <form class="needs-validation" novalidate method = "POST" >
+     <form method = "post" class="needs-validation" novalidate  >
        <div class="form-row">
          <div class="col-md-4 mb-3">
            <label for="fname">First name</label>
@@ -99,7 +105,7 @@ if($stmt = $con->prepare($query)){
            <div class="valid-feedback">
              Looks good!
            </div>
-         </div>
+				  </div>
        </div>
        <div class="form-row">
         <div class="col-md-4 mb-3">
@@ -116,7 +122,8 @@ if($stmt = $con->prepare($query)){
         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name ="email">
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
       </div>
-      </div>
+
+		  </div>
       <div class="form-row">
         <div class="col-md-4 mb-3">
          <label for="pnumber">Phone Number</label>
@@ -153,12 +160,38 @@ if($stmt = $con->prepare($query)){
           </div>
         </div>
       </div>
-      <div class="form-row">
+      <!--div class="form-row">
         <div class="col-md-4 mb-3">
           <label for="bid">Branch Id</label>
           <input type="text" class="form-control" id="bid" name = "bid" placeholder="Branch Id" required>
         </div>
-      </div>
+      </div-->
+			<div class="dropdown">
+  			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    			Branch Id
+  			</button>
+  		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<?php
+				/*$servername = "localhost";
+				$usrname = "root";
+				$usrpass = "";
+				$database = "internship_portal";
+
+				 $con = mysqli_connect($servername, $usrname, $usrpass, $database);*/
+
+					$sql = "SELECT `branch_id`FROM `branch`";
+					$query = $con->query($sql);
+
+				//echo "<select name='branch_id'>";
+				while ($row = $query->fetch_assoc()) {
+				    echo "<a class='dropdown-item' href = '#'>" . $row['branch_id'] ."</a>";
+				}
+				//echo "</select>";
+				?>
+  		</div>
+		</div>
+
+
       <div class="form-row">
         <div class="col-md-2 mb-3">
           <label for="cgpa">CGPA</label>
