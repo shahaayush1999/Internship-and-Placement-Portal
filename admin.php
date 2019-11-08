@@ -54,17 +54,17 @@ if (isset($_POST)) {
 	    	</tbody>
 		</table>
     <form method="post">
-       <input type="submit" name="add_comp" class="btn btn-primary" value="Add Company"/>
+       <input type="submit" name="add_comp" class="btn btn-primary" value="Add Company">
    </form>
    <?php
-       if(array_key_exists('add_comp', $_POST)) {
-           add_comp();
+       if(isset($_POST['add_comp'])) {
+				 	echo "Echo";
+					header("Loction: add_comp.php");
        }
 
-       function add_comp() {
-            echo "Echo";
-           //header("Loction : add_comp.php");
-       }
+       /*function add_comp() {
+
+       }*/
    ?>
 </html>
 <?php $conn->close(); ?>
