@@ -30,7 +30,7 @@ if(isset($_POST['number'])){
 
 $query = "INSERT INTO `company`(`comp_name`, `contact_name`, `contact_number`, `contact_email`) VALUES (?, ?, ?, ?)";
 if($stmt = $con->prepare($query)){
-	$stmt->bind_param("ssss", $name, $cname, $number, $email );
+	$st<button type="submit" name="return" class="btn btn-outline-primary">Back</button>mt->bind_param("ssss", $name, $cname, $number, $email );
 	$stmt->execute();
   }
 ?>
@@ -94,10 +94,19 @@ if($stmt = $con->prepare($query)){
           </div>
         </div>
         	<div class="form-row">
-            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <div class="col-md-4 mb-3">
+              <button type="submit" name = 'return' class="btn btn-outline-primary">Submit</button>
+            </div>
           </div>
         </form>
       </div>
   </div>
+  <?php
+      if(isset($_POST['return'])) {
+         //header("Loction: /Internship-and-Placement-Portal/add_comp.php");
+         echo "<script type='text/javascript'> document.location = 'admin.php'; </script>";
+         echo "Go";
+      }
+  ?>
   </body>
 </html>

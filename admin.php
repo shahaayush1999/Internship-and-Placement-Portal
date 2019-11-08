@@ -26,6 +26,12 @@ if (isset($_POST)) {
 
 </head>
 <body>
+			<nav class="navbar navbar-light bg-light">
+		  	<form class="form-inline" method = "post">
+						 <button type="submit" name="add_comp" class="btn btn-outline-primary">Add Company</button>
+		  </form>
+		</nav>
+
 	    <table class="table table-striped table-bordered">
         <caption>Company Database</caption>
 	    	<thead class="thead-light">
@@ -53,18 +59,14 @@ if (isset($_POST)) {
 	    		?>
 	    	</tbody>
 		</table>
-    <form method="post">
-       <input type="submit" name="add_comp" class="btn btn-primary" value="Add Company">
-   </form>
+
    <?php
        if(isset($_POST['add_comp'])) {
-				 	echo "Echo";
-					header("Loction: add_comp.php");
+				  //header("Loction: /Internship-and-Placement-Portal/add_comp.php");
+					echo "<script type='text/javascript'> document.location = 'add_comp.php'; </script>";
+					echo "Go";
        }
-
-       /*function add_comp() {
-
-       }*/
    ?>
+ </body>
 </html>
 <?php $conn->close(); ?>
