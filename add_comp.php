@@ -9,9 +9,9 @@ $database = "internship_portal";
 $con = mysqli_connect($servername, $usrname, $usrpass, $database);
 if(!$con){
   die('Connection Failed : '. mysqli_connect_error());
-}
+}else{echo "Connected";}
 
-$cid = $name= $cname = $email = $number = "";
+$name= $cname = $email = $number = "";
 
 if(isset($_POST['name'])){
   $name = $_POST["name"];
@@ -30,7 +30,7 @@ if(isset($_POST['number'])){
 
 $query = "INSERT INTO `company`(`comp_name`, `contact_name`, `contact_number`, `contact_email`) VALUES (?, ?, ?, ?)";
 if($stmt = $con->prepare($query)){
-	$st<button type="submit" name="return" class="btn btn-outline-primary">Back</button>mt->bind_param("ssss", $name, $cname, $number, $email );
+	$stmt->bind_param("ssss", $name, $cname, $number, $email );
 	$stmt->execute();
   }
 ?>
@@ -53,14 +53,6 @@ if($stmt = $con->prepare($query)){
         <h2 class="text-center">Add Company</h2>
         <form method = "post" class="needs-validation" novalidate>
 
-      <!--div class="form-row">
-        <div class="col-md-2 mb-3">
-          <div class="form-group">
-            <label for="cid">Company Id</label>
-            <input type="text" name = 'cid' class="form-control" id = "cid">
-          </div>
-        </div>
-      </div-->
         <div class="form-row">
           <div class="col-md-8 mb-3">
             <div class="form-group">

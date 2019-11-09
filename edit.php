@@ -20,7 +20,15 @@
 				<?php
 					include('session.php');
 					include('config.php');
+          $servername = "localhost";
+          $usrname = "root";
+          $usrpass = "";
+          $database = "internship_portal";
 
+          $con = mysqli_connect($servername, $usrname, $usrpass, $database);
+          if(!$con){
+            die('Connection Failed : '. mysqli_connect_error());
+          }
 					$fname = $mname = $lname = $pnnumber = $email = $live_back = $dead_back = $prev_int = $branch_id = $cgpa = $batch = $year_id = "";
 
 					if(isset($_POST['fname']))	$fname = $_POST["fname"];
@@ -42,7 +50,7 @@
 						$stmt->execute();
 						// Printing Last response from server
 						echo "<br><br>Server Response: ".$con->error;
-					} else {
+					}else {
 							$error = "Not connected";
 							echo "$error";
 					}
