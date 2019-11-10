@@ -34,11 +34,63 @@
 					$fname = $mname = $lname = $pnnumber = $email = $live_back = $dead_back = $prev_int = $branch_id = $cgpa = $batch = $year_id = "";
 
 
-					if(isset($_POST['fname']))	{$fname = $_POST["fname"];}
-					if(isset($_POST['mname']))	{$mname = $_POST["mname"];}
-					if(isset($_POST['lname']))	{$lname = $_POST["lname"];}
-					if(isset($_POST['pnumber'])){	$pnumber = $_POST["pnumber"];}
-					if(isset($_POST['email']))	{$email = $_POST["email"];}
+          /*if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                  if (empty($_POST["fname"])) {
+                    $fnameErr = "First Name is required";
+                  } else {
+                    $fname = test_input($_POST["fname"]);
+                    // check if name only contains letters and whitespace
+                    if (!preg_match("/^[a-zA-Z ]*$/",$fname)) {
+                      $fnameErr = "Only letters and white space allowed";
+                    }
+                  }
+                  if (empty($_POST["mname"])) {
+                    $mnameErr = "Middle Name is required";
+                  } else {
+                    $mname = test_input($_POST["mname"]);
+                    // check if name only contains letters and whitespace
+                    if (!preg_match("/^[a-zA-Z ]*$/",$mname)) {
+                      $mnameErr = "Only letters and white space allowed";
+                    }
+                  }
+                  if (empty($_POST["lname"])) {
+                    $lnameErr = "Last Name is required";
+                  } else {
+                    $lname = test_input($_POST["lname"]);
+                    // check if name only contains letters and whitespace
+                    if (!preg_match("/^[a-zA-Z ]*$/",$lname)) {
+                      $lnameErr = "Only letters and white space allowed";
+                    }
+                  }
+
+                  if (empty($_POST["email"])) {
+                    $emailErr = "Email is required";
+                  } else {
+                    $email = test_input($_POST["email"]);
+                    // check if e-mail address is well-formed
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                      $emailErr = "Invalid email format";
+                    }
+                  }
+        					if(empty($_POST['pnumber'])){
+                    $numerr = "Phone Number Required";
+                  }else{
+                    $pnumber = $_POST["pnumber"];
+                  }
+                }
+
+                function test_input($data) {
+                      $data = trim($data);
+                      $data = stripslashes($data);
+                      $data = htmlspecialchars($data);
+                      return $data;
+                }*/
+
+          if(isset($_POST['fname']))	{$fname = $_POST["fname"];}
+          if(isset($_POST['lname']))	{$lname = $_POST["lname"];}
+          if(isset($_POST['mname']))	{$mname = $_POST["mname"];}
+          if(isset($_POST['pnumber']))	{$pnumber = $_POST["pnumber"];}
+          if(isset($_POST['email']))	{$email= $_POST["email"];}
 					if(isset($_POST['live_back']))	{$live_back = $_POST["live_back"];}
 					if(isset($_POST['dead_back']))	{$dead_back = $_POST["dead_back"];}
 					if(isset($_POST['previous_internships']))	{$prev_int = $_POST["previous_internships"];}
@@ -82,7 +134,7 @@
 					<div class="form-row">
 						<div class="col-md-4 mb-3">
 							<label for="pnumber">Phone Number</label>
-							<input id="pnumber" class="form-control" type="tel" pattern="^\d{4}-\d{3}-\d{4}$" placeholder="Phone Number"	name = "pnumber" required >
+							<input type = "text" id="pnumber" class="form-control" placeholder="Phone Number"	name = "pnumber" required >
 							<div class="valid-feedback">Looks good!</div>
 						</div>
 						<div class="col-md-8 mb-3">
@@ -152,8 +204,27 @@
 							<button class="btn btn-primary btn-block" type="submit">Submit</button>
 					</div>
 				</form>
+        <script>
+          // Example starter JavaScript for disabling form submissions if there are invalid fields
+          (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+              // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              var forms = document.getElementsByClassName('needs-validation');
+              // Loop over them and prevent submission
+              var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                  if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                  form.classList.add('was-validated');
+                }, false);
+              });
+            }, false);
+          })();
+          </script>
 			</div>
 		</div>
-		<br><br>
 	</body>
 </html>
