@@ -95,9 +95,9 @@ if($stmt = $con->prepare($query)){
   </div>
   <?php
       if(isset($_POST['return'])) {
-         //header("Loction: /Internship-and-Placement-Portal/add_comp.php");
-         echo "<script type='text/javascript'> document.location = 'admin.php'; </script>";
-         echo "Go";
+         header("Location: admin.php");
+         //echo "<script type='text/javascript'> document.location = 'admin.php'; </script>";
+         //echo "Go";
       }
   ?>
   </body>

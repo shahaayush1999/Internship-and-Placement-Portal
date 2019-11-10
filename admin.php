@@ -26,7 +26,7 @@ if (isset($_POST)) {
 
 </head>
 <body>
-			<nav class="navbar navbar-light bg-light">
+			<nav class="navbar navbar-light bg-light justify-content-end">
 		  	<form class="form-inline" method = "post">
 						 <button type="submit" name="add_comp" class="btn btn-outline-primary">Add Company</button>
 		  </form>
@@ -58,6 +58,35 @@ if (isset($_POST)) {
 					}
 	    		?>
 	    	</tbody>
+		</table>
+
+		<table class="table table-striped table-bordered">
+			<caption>Student Data</caption>
+			<thead class="thead-light">
+				<tr>
+					<th>MIS</th>
+					<th>Debarred</th>
+					<th>First Name</th>
+					<th>Middle Name</th>
+					<th>Last Name</th>
+					<th>Current Year</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$sql = "SELECT `mis`, `debarred`, `first_name`, `middle_name`, `last_name`, `current_year` FROM `student`";
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+						while($row = $result->fetch_assoc()) {
+								echo "<tr><td>".$row["mis"]."</td><td>".$row["debarred"]."</td><td>".$row["first_name"]."</td><td>".$row["middle_name"]."</td><td>".$row["last_name"]."</td><td>".$row["current_year"]."</td>";
+								echo '</tr>';
+						}
+						echo "</table>";
+				} else {
+					echo "0 results";
+				}
+				?>
+			</tbody>
 		</table>
 
    <?php

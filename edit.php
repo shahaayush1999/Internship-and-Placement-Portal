@@ -19,7 +19,7 @@
 				</table>
 				<?php
 					include('session.php');
-					include('config.php');
+					//include('config.php');
           $servername = "localhost";
           $usrname = "root";
           $usrpass = "";
@@ -28,23 +28,26 @@
           $con = mysqli_connect($servername, $usrname, $usrpass, $database);
           if(!$con){
             die('Connection Failed : '. mysqli_connect_error());
-          }
+          }else{echo"Connected";}
+
+
 					$fname = $mname = $lname = $pnnumber = $email = $live_back = $dead_back = $prev_int = $branch_id = $cgpa = $batch = $year_id = "";
 
-					if(isset($_POST['fname']))	$fname = $_POST["fname"];
-					if(isset($_POST['mname']))	$mname = $_POST["mname"];
-					if(isset($_POST['lname']))	$lname = $_POST["lname"];
-					if(isset($_POST['pnumber']))	$pnumber = $_POST["pnumber"];
-					if(isset($_POST['email']))	$email = $_POST["email"];
-					if(isset($_POST['live_back']))	$live_back = $_POST["live_back"];
-					if(isset($_POST['dead_back']))	$dead_back = $_POST["dead_back"];
-					if(isset($_POST['previous_internships']))	$prev_int = $_POST["previous_internships"];
-					if(isset($_POST['branch_id']))	$branch_id = $_POST["branch_id"];
-					if(isset($_POST['cgpa']))	$cgpa = $_POST["cgpa"];
-					if(isset($_POST['batch']))	$batch = $_POST["batch"];
-					if(isset($_POST['year_id']))	$year_id = $_POST["year_id"];
 
-					$query = "INSERT INTO `student`(`mis`, `first_name`, `middle_name`, `last_name`, `number`, `email`, `live_back`, `dead_back`, `previous_internships`, `branch_id`, `cgpa`, `batch`, `year_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					if(isset($_POST['fname']))	{$fname = $_POST["fname"];}
+					if(isset($_POST['mname']))	{$mname = $_POST["mname"];}
+					if(isset($_POST['lname']))	{$lname = $_POST["lname"];}
+					if(isset($_POST['pnumber'])){	$pnumber = $_POST["pnumber"];}
+					if(isset($_POST['email']))	{$email = $_POST["email"];}
+					if(isset($_POST['live_back']))	{$live_back = $_POST["live_back"];}
+					if(isset($_POST['dead_back']))	{$dead_back = $_POST["dead_back"];}
+					if(isset($_POST['previous_internships']))	{$prev_int = $_POST["previous_internships"];}
+					if(isset($_POST['branch_id']))	{$branch_id = $_POST["branch_id"];}
+					if(isset($_POST['cgpa']))	{$cgpa = $_POST["cgpa"];}
+					if(isset($_POST['batch']))	{$batch = $_POST["batch"];}
+					if(isset($_POST['year_id']))	{$year_id = $_POST["year_id"];}
+
+					$query = "INSERT INTO `student`(`mis`, `first_name`, `middle_name`, `last_name`, `number`, `email`, `live_back`, `dead_back`, `previous_internships`, `branch_id`, `cgpa`, `batch`, `current_year`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 					if($stmt = $con->prepare($query)){
 						$stmt->bind_param("sssssssssssss", $login_mis, $fname, $mname, $lname, $pnumber, $email, $live_back, $dead_back, $prev_int, $branch_id, $cgpa, $batch, $year_id);
 						$stmt->execute();
