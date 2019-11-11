@@ -68,7 +68,7 @@
 			</thead>
 			<tbody>
 				<?php
-					$sql = "SELECT `mis`, `debarred`, `first_name`, `middle_name`, `last_name`, `current_year` FROM `student`";
+					$sql = "SELECT `mis`, `debarred`, `first_name`, `middle_name`, `last_name`, `year_id` FROM `student`";
 					$result = $con->query($sql);
 					if ($result->num_rows > 0) {
 							while($row = $result->fetch_assoc()) {
