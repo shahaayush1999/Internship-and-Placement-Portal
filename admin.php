@@ -72,7 +72,7 @@
 					$result = $con->query($sql);
 					if ($result->num_rows > 0) {
 							while($row = $result->fetch_assoc()) {
-									echo "<tr><td>".$row["mis"]."</td><td>".$row["debarred"]."</td><td>".$row["first_name"]."</td><td>".$row["middle_name"]."</td><td>".$row["last_name"]."</td><td>".$row["current_year"]."</td>";
+									echo "<tr><td>".$row["mis"]."</td><td>".$row["debarred"]."</td><td>".$row["first_name"]."</td><td>".$row["middle_name"]."</td><td>".$row["last_name"]."</td><td>".$row["year_id"]."</td>";
 									echo '</tr>';
 							}
 							echo "</table>";
