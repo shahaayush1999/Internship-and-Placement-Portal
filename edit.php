@@ -4,13 +4,13 @@
 		<meta charset="utf-8">
 		<title>Edit</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> </script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> </script> -->
 	</head>
 	<body>
+		<br>
 		<div class="row d-flex"> <!-- Add this class to recenter edit div after removing debug panel "justify-content-center" -->
-
 			<div class="col-md-4">
 				<h2 class="text-center">Processing Panel</h2>
 				<table>
@@ -19,89 +19,80 @@
 				</table>
 				<?php
 					include('session.php');
-					//include('config.php');
-          $servername = "localhost";
-          $usrname = "root";
-          $usrpass = "";
-          $database = "internship_portal";
-
-          $con = mysqli_connect($servername, $usrname, $usrpass, $database);
-          if(!$con){
-            die('Connection Failed : '. mysqli_connect_error());
-          }else{echo"Connected";}
-
+					include('config.php');
 
 					$fname = $mname = $lname = $pnnumber = $email = $live_back = $dead_back = $prev_int = $branch_id = $cgpa = $batch = $year_id = "";
 
+					// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+					// 	if (empty($_POST["fname"])) {
+					// 		$fnameErr = "First Name is required";
+					// 	} else {
+					// 		$fname = test_input($_POST["fname"]);
+					// 	// check if name only contains letters and whitespace
+					// 		if (!preg_match("/^[a-zA-Z ]*$/",$fname)) {
+					// 			$fnameErr = "Only letters and white space allowed";
+					// 		}
+					// 	}
+					// 	if (empty($_POST["mname"])) {
+					// 		$mnameErr = "Middle Name is required";
+					// 	} else {
+					// 		$mname = test_input($_POST["mname"]);
+					// 		// check if name only contains letters and whitespace
+					// 		if (!preg_match("/^[a-zA-Z ]*$/",$mname)) {
+					// 			$mnameErr = "Only letters and white space allowed";
+					// 		}
+					// 	}
+					// 	if (empty($_POST["lname"])) {
+					// 		$lnameErr = "Last Name is required";
+					// 	} else {
+					// 		$lname = test_input($_POST["lname"]);
+					// 		// check if name only contains letters and whitespace
+					// 		if (!preg_match("/^[a-zA-Z ]*$/",$lname)) {
+					// 			$lnameErr = "Only letters and white space allowed";
+					// 		}
+					// 	}
+					//
+					// 	if (empty($_POST["email"])) {
+					// 		$emailErr = "Email is required";
+					// 	} else {
+					// 		$email = test_input($_POST["email"]);
+					// 		// check if e-mail address is well-formed
+					// 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+					// 			$emailErr = "Invalid email format";
+					// 		}
+					// 	}
+					// 			if(empty($_POST['pnumber'])){
+					// 				$numerr = "Phone Number Required";
+					// 	} else{
+					// 		$pnumber = $_POST["pnumber"];
+					// 	}
+					// }
+					//
+					// function test_input($data) {
+					// 		$data = trim($data);
+					// 		$data = stripslashes($data);
+					// 		$data = htmlspecialchars($data);
+					// 		return $data;
+					// }
 
-          /*if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                  if (empty($_POST["fname"])) {
-                    $fnameErr = "First Name is required";
-                  } else {
-                    $fname = test_input($_POST["fname"]);
-                    // check if name only contains letters and whitespace
-                    if (!preg_match("/^[a-zA-Z ]*$/",$fname)) {
-                      $fnameErr = "Only letters and white space allowed";
-                    }
-                  }
-                  if (empty($_POST["mname"])) {
-                    $mnameErr = "Middle Name is required";
-                  } else {
-                    $mname = test_input($_POST["mname"]);
-                    // check if name only contains letters and whitespace
-                    if (!preg_match("/^[a-zA-Z ]*$/",$mname)) {
-                      $mnameErr = "Only letters and white space allowed";
-                    }
-                  }
-                  if (empty($_POST["lname"])) {
-                    $lnameErr = "Last Name is required";
-                  } else {
-                    $lname = test_input($_POST["lname"]);
-                    // check if name only contains letters and whitespace
-                    if (!preg_match("/^[a-zA-Z ]*$/",$lname)) {
-                      $lnameErr = "Only letters and white space allowed";
-                    }
-                  }
+					if(isset($_POST['fname']))	$fname = $_POST["fname"];
+					if(isset($_POST['lname']))	$lname = $_POST["lname"];
+					if(isset($_POST['mname']))	$mname = $_POST["mname"];
+					if(isset($_POST['pnumber']))	$pnumber = $_POST["pnumber"];
+					if(isset($_POST['email']))	$email= $_POST["email"];
+					if(isset($_POST['live_back']))	$live_back = $_POST["live_back"];
+					if(isset($_POST['dead_back']))	$dead_back = $_POST["dead_back"];
+					if(isset($_POST['previous_internships']))	$prev_int = $_POST["previous_internships"];
+					if(isset($_POST['branch_id']))	$branch_id = $_POST["branch_id"];
+					if(isset($_POST['cgpa']))	$cgpa = $_POST["cgpa"];
+					if(isset($_POST['batch']))	$batch = $_POST["batch"];
+					if(isset($_POST['year_id']))	$year_id = $_POST["year_id"];
 
-                  if (empty($_POST["email"])) {
-                    $emailErr = "Email is required";
-                  } else {
-                    $email = test_input($_POST["email"]);
-                    // check if e-mail address is well-formed
-                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                      $emailErr = "Invalid email format";
-                    }
-                  }
-        					if(empty($_POST['pnumber'])){
-                    $numerr = "Phone Number Required";
-                  }else{
-                    $pnumber = $_POST["pnumber"];
-                  }
-                }
-
-                function test_input($data) {
-                      $data = trim($data);
-                      $data = stripslashes($data);
-                      $data = htmlspecialchars($data);
-                      return $data;
-                }*/
-
-          if(isset($_POST['fname']))	{$fname = $_POST["fname"];}
-          if(isset($_POST['lname']))	{$lname = $_POST["lname"];}
-          if(isset($_POST['mname']))	{$mname = $_POST["mname"];}
-          if(isset($_POST['pnumber']))	{$pnumber = $_POST["pnumber"];}
-          if(isset($_POST['email']))	{$email= $_POST["email"];}
-					if(isset($_POST['live_back']))	{$live_back = $_POST["live_back"];}
-					if(isset($_POST['dead_back']))	{$dead_back = $_POST["dead_back"];}
-					if(isset($_POST['previous_internships']))	{$prev_int = $_POST["previous_internships"];}
-					if(isset($_POST['branch_id']))	{$branch_id = $_POST["branch_id"];}
-					if(isset($_POST['cgpa']))	{$cgpa = $_POST["cgpa"];}
-					if(isset($_POST['batch']))	{$batch = $_POST["batch"];}
-					if(isset($_POST['year_id']))	{$year_id = $_POST["year_id"];}
-
-					$query = "INSERT INTO `student`(`mis`, `first_name`, `middle_name`, `last_name`, `number`, `email`, `live_back`, `dead_back`, `previous_internships`, `branch_id`, `cgpa`, `batch`, `current_year`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					$query = "UPDATE `student` SET `first_name`=?,`middle_name`=?,`last_name`=?,
+								`number`=?,`email`=?,`live_back`=?,`dead_back`=?,`previous_internships`=?,
+								`branch_id`=?,`cgpa`=?,`batch`=?,`year_id`=? WHERE `mis` =?";
 					if($stmt = $con->prepare($query)){
-						$stmt->bind_param("sssssssssssss", $login_mis, $fname, $mname, $lname, $pnumber, $email, $live_back, $dead_back, $prev_int, $branch_id, $cgpa, $batch, $year_id);
+						$stmt->bind_param("sssssssssssss", $fname, $mname, $lname, $pnumber, $email, $live_back, $dead_back, $prev_int, $branch_id, $cgpa, $batch, $year_id, $login_mis);
 						$stmt->execute();
 						// Printing Last response from server
 						echo "<br><br>Server Response: ".$con->error;
@@ -204,26 +195,6 @@
 							<button class="btn btn-primary btn-block" type="submit">Submit</button>
 					</div>
 				</form>
-        <script>
-          // Example starter JavaScript for disabling form submissions if there are invalid fields
-          (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-              // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              var forms = document.getElementsByClassName('needs-validation');
-              // Loop over them and prevent submission
-              var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                  if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                  }
-                  form.classList.add('was-validated');
-                }, false);
-              });
-            }, false);
-          })();
-          </script>
 			</div>
 		</div>
 	</body>

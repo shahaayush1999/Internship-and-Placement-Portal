@@ -1,41 +1,23 @@
 <?php
 
-//include 'config.php';
-$servername = "localhost";
-$usrname = "root";
-$usrpass = "";
-$database = "internship_portal";
+	include 'config.php';
 
-$con = mysqli_connect($servername, $usrname, $usrpass, $database);
-if(!$con){
-  die('Connection Failed : '. mysqli_connect_error());
-}else{echo "Connected";}
+	$name= $company_name = $email = $number = "";
+	$script_should_run = true;
 
-$name= $cname = $email = $number = "";
+	if(isset($_POST['name']) AND $_POST['name'] != '') $name = $_POST["name"]; else $script_should_run = false;
+	if(isset($_POST['company_name']) AND $_POST['name'] != '') $company_name = $_POST["company_name"]; else $script_should_run = false;
+	if(isset($_POST['email']) AND $_POST['name'] != '') $email = $_POST["email"]; else $script_should_run = false;
+	if(isset($_POST['number']) AND $_POST['name'] != '') $number = $_POST["number"]; else $script_should_run = false;
 
-if(isset($_POST['name'])){
-  $name = $_POST["name"];
-}
-
-if(isset($_POST['cname'])){
-  $cname = $_POST["cname"];
-}
-if(isset($_POST['email'])){
-  $email = $_POST["email"];
-}
-if(isset($_POST['number'])){
-  $number = $_POST["number"];
-}
-
-
-$query = "INSERT INTO `company`(`comp_name`, `contact_name`, `contact_number`, `contact_email`) VALUES (?, ?, ?, ?)";
-if($stmt = $con->prepare($query)){
-	$stmt->bind_param("ssss", $name, $cname, $number, $email );
-	$stmt->execute();
-  }
+	if($script_should_run) {
+		$query = "INSERT INTO `company`(`comp_name`, `contact_name`, `contact_number`, `contact_email`) VALUES (?, ?, ?, ?)";
+		if($stmt = $con->prepare($query)){
+			$stmt->bind_param("ssss", $name, $company_name, $number, $email );
+			$stmt->execute();
+		}
+	}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -64,8 +46,8 @@ if($stmt = $con->prepare($query)){
         <div class="form-row">
           <div class="col-md-8 mb-3">
             <div class="form-group">
-              <label for="cname">Contact Name</label>
-              <input type="text" name = 'cname' class="form-control" id = "cname">
+              <label for="company_name">Contact Name</label>
+              <input type="text" name = 'company_name' class="form-control" id = "company_name">
             </div>
           </div>
         </div>
@@ -95,9 +77,7 @@ if($stmt = $con->prepare($query)){
   </div>
   <?php
       if(isset($_POST['return'])) {
-         header("Location: admin.php");
-         //echo "<script type='text/javascript'> document.location = 'admin.php'; </script>";
-         //echo "Go";
+         header("Location:admin.php");
       }
   ?>
   </body>
