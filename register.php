@@ -37,7 +37,7 @@
 
 	<body>
 		<div class="h-100 row d-flex justify-content-center align-items-center">
-			<div class="col-md-3 border rounded">
+			<div class="col-md-3 border shadow-lg p-3 mb-5 bg-white rounded">
 				<h2 class="text-center">Register</h2>
 				<form class="needs-validation" method = "post">
 					<div class="form-row md">
