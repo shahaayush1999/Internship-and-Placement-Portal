@@ -1,17 +1,14 @@
 <?php
 	include('session.php');
 	include('config.php');
-
-	//<!-- Post Var dump -->
-	foreach ($_POST as $key => $value) echo "<tr>\n<td>".$key."</td>\n<td>".$value."</td>\n</tr>";
-
+	include('functions.php');
 	if (isset($_POST)) {
 		foreach($_POST as $key => $value) {
-			if (strstr($key, 'delete')){
-				$id = substr($key, 7);
-				$query = "DELETE FROM branch where branch_id = ".$id;
-				$result = $con->query($query);
-			}
+		    if (strstr($key, 'delete')){
+		    	$id = substr($key, 7);
+				$query_error = sql_delete_query('branch_id', $id, 'branch');
+				echo $query_error;
+		    }
 		}
 	}
 ?>
@@ -60,14 +57,18 @@
 		<table class="table table-striped">
 			<thead class="thead-dark">
 				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Delete</th>
+					<?php
+						$headers = array('ID', 'Name', 'Delete');
+						place_cells('th', $headers);
+					 ?>
+
 				</tr>
 			</thead>
 			<tbody>
 				<?php
-					$sql = "SELECT branch_id, branch_name FROM branch ORDER BY branch_id";
+					//$variables = array('branch_id', 'branch_name');
+					//$table_name = 'branch';
+					$sql = "SELECT branch_id, branch_name FROM branch";
 					$result = $con->query($sql);
 					if ($result->num_rows > 0) {
 						// output data of each row

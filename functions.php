@@ -90,6 +90,13 @@
 		}
 	}
 
+	function sql_delete_query($id_name, $id, $table_name) {
+		global $con;
+		$query = 'DELETE FROM '.$table_name.' WHERE '.$id_name.' = '.$id;
+    	$result = $con->query($query);
+		return $con->error;
+	}
+
 	function sql_select_query($variables, $table_name) {
 		if ($variables == null) {
 			$vars = '*';
