@@ -1,5 +1,6 @@
 <?php
 	include('config.php');
+
 	/**
 	* Creates a unique Salt for hashing the password
 	*
@@ -36,7 +37,7 @@
 	*
 	* @return
 	*/
-	function userExists($mis) {
+	function user_exists($mis) {
 		$query = "SELECT mis FROM user WHERE mis = ?";
 		global $con;
 		if($stmt = $con->prepare($query)) {
@@ -90,20 +91,25 @@
 		}
 	}
 
-	function sql_delete_query($id_name, $id, $table_name) {
+	function sql_delete_query($column_name, $column_value, $table_name) {
 		global $con;
-		$query = 'DELETE FROM '.$table_name.' WHERE '.$id_name.' = '.$id;
-    	$result = $con->query($query);
+		$query = 'DELETE FROM '.$table_name.' WHERE '.$column_name.' = '.$column_value;
+		$result = $con->query($query);
 		return $con->error;
 	}
 
-	function sql_select_query($variables, $table_name) {
+	function sql_select_query($variables, $table_name, $conditions) {
 		if ($variables == null) {
 			$vars = '*';
 		} else {
 			$vars = "`".join("`, `",$variables)."`";
 		}
-		$sql = 'SELECT '.$vars.'FROM '.$table_name;
+		if ($conditions == null) {
+			$condition_statement = '';
+		} else {
+			$condition_statement = ' WHERE '.join(" AND ", $conditions);
+		}
+		$sql = 'SELECT '.$vars.'FROM ' . $table_name . $condition_statement;
 		global $con;
 		$result = $con->query($sql);
 		if ($result->num_rows > 0) {
@@ -111,7 +117,10 @@
 				place_cells('td', $row);
 			}
 		} else {
-			echo "0 results, Server Response: ".$con->error;
+			echo "0 results";
+		}
+		if ($con->error != '') {
+			echo "Server Response: ".$con->error;
 		}
 	}
 
@@ -131,10 +140,23 @@
 			echo "Error: " . $conn->error;
 		}
 	}
-	function debarr($dmis, $input) {
-		$query = "UPDATE student SET debarred = '".$input "' WHERE mis = '".$dmis "';
-		
-		$result = $con->query($query);
 
+	function debar_student($mis) {
+		$query = "UPDATE `student` SET `debarred` = 1 WHERE `mis` = ".$mis ;
+		global $con;
+		if ($con->query($query) === TRUE) {
+			echo $mis . " debarred successfully";
+		} else {
+			echo "Error debarring student: ". $mis. ". Reason: " . $con->error;
+		}
+	}
+	function undebar_student($mis) {
+		$query = "UPDATE `student` SET `debarred` = 0 WHERE `mis` = ".$mis ;
+		global $con;
+		if ($con->query($query) === TRUE) {
+			echo $mis . " undebarred successfully";
+		} else {
+			echo "Error undebarring student: ". $mis. ". Reason: " . $con->error;
+		}
 	}
 ?>

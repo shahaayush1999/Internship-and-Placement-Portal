@@ -9,7 +9,7 @@
 		$mymis = $_POST['mis'];
 		$mypassword = $_POST['password'];
 
-		if(!userExists($mymis)) {
+		if(!user_exists($mymis)) {
 			$salt = getSalt();
 			$password = password_hash(concatPasswordWithSalt($mypassword,$salt),PASSWORD_DEFAULT);
 			// prepare and bind
@@ -20,7 +20,7 @@
 				$_SESSION['login_mis'] = $mymis;
 				$role = 0;
 				$_SESSION['login_role'] = $role;
-				header("location: welcome.php");
+				header("location: redirect.php");
 			}
 		}
 		else {

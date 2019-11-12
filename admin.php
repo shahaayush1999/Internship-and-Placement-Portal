@@ -6,6 +6,12 @@
 	if(isset($_POST['add_comp'])) {
 		header("loction: add_comp.php");
 	}
+	if(isset($_POST['debar_mis'])) {
+		debar_student($_POST['debar_mis']);
+	}
+	if(isset($_POST['undebar_mis'])) {
+		undebar_student($_POST['undebar_mis']);
+	}
 ?>
 
 <html>
@@ -46,7 +52,7 @@
 				<a href = "logout.php" class="btn btn-danger my-2 my-sm-0" type="submit">Sign Out</a>
 			</div>
 		</nav>
-		<br><br><br><br>
+		<br><br>
 		<div class="row justify-content-center">
 			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
 				<nav class="navbar navbar-light bg-light justify-content-left">
@@ -64,12 +70,51 @@
 						<?php
 							$variables = array('comp_id', 'comp_name', 'contact_name', 'contact_number', 'contact_email');
 							$table_name = 'company';
-							sql_select_query($variables, $table_name);
+							$conditions = null;
+							sql_select_query($variables, $table_name, $conditions);
 						?>
 					</tbody>
 				</table>
 			</div>
-
+			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
+				<nav class="navbar navbar-light bg-light justify-content-left">
+					<a class="navbar-brand ">Debarred Students</a>
+				</nav>
+				<table class='table table-striped table-bordered'>
+					<thead class="thead-light">
+						<tr>
+							<?php
+								$headers = array('MIS', 'First Name', 'Middle Name', 'Last Name', 'Current Year');
+								place_cells('th', $headers);
+							?>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+							$variables = array('mis', 'first_name', 'middle_name', 'last_name', 'year_id');
+							$table_name = 'student';
+							$conditions = array('`debarred` = 1');
+							sql_select_query($variables, $table_name, $conditions);
+						?>
+					</tbody>
+				</table>
+				<div class="row mb-3 ml-3">
+					<div class="col-md-6 mb-3">
+						<form action="admin.php" method="POST">
+							<a class="navbar-brand">Debar Student: </a>
+							<input type="text" name="debar_mis">
+							<button type="submit" name = 'return' class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+					<div class="col-md-6 mb-3">
+						<form action="admin.php" method="POST">
+							<a class="navbar-brand">Undebar Student: </a>
+							<input type="text" name="undebar_mis">
+							<button type="submit" name = 'return' class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
 			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
 				<nav class="navbar navbar-light bg-light justify-content-left">
 					<a class="navbar-brand ">Student Database</a>
@@ -85,7 +130,8 @@
 						<?php
 							$variables = array('mis', 'debarred', 'first_name', 'middle_name', 'last_name', 'year_id');
 							$table_name = 'student';
-							sql_select_query($variables, $table_name);
+							$conditions = null;
+							sql_select_query($variables, $table_name, $conditions);
 						?>
 					</tbody>
 				</table>
@@ -93,4 +139,3 @@
 		</div>
 	</body>
 </html>
-<?php $con->close(); ?>

@@ -1,14 +1,14 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "internship_portal";
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "internship_portal";
 
-// Create connection
-$con = new mysqli($servername, $username, $password, $dbname);
+	// Create connection
+	$con = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($con->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+	// Check connection
+	if ($con->connect_error) {
+		die("Connection failed: " . $con->connect_error);
 }
 ?>

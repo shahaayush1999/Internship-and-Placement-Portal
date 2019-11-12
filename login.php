@@ -20,7 +20,7 @@
 				if(password_verify(concatPasswordWithSalt($mypassword,$saltDB),$passwordDB)){
 					$_SESSION['login_mis'] = $misDB;
 					$_SESSION['login_role'] = $roleDB;
-					header("location: welcome.php");
+					header("location: redirect.php");
 				}
 			}
 			else {
@@ -32,9 +32,9 @@
 <html>
 
 	<head>
-	  <title>Login Page</title>
-	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  </head>
+		<title>Login Page</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	</head>
 
 	</head>
 

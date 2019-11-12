@@ -82,7 +82,7 @@
 							<select class="form-control" name='compid' id="compid">
 								<?php
 									$sql = "SELECT `comp_id`, `comp_name` FROM `company`";
-					  			$query = $con->query($sql);
+									$query = $con->query($sql);
 									while ($row = $query->fetch_assoc()) {
 										echo "<option value=". $row[comp_id] .">". $row[comp_name] ."</option>";
 									}
