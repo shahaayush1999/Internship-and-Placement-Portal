@@ -1,6 +1,19 @@
 <?php
 	include('session.php');
 	include('config.php');
+
+	//<!-- Post Var dump -->
+	foreach ($_POST as $key => $value) echo "<tr>\n<td>".$key."</td>\n<td>".$value."</td>\n</tr>";
+
+	if (isset($_POST)) {
+		foreach($_POST as $key => $value) {
+			if (strstr($key, 'delete')){
+				$id = substr($key, 7);
+				$query = "DELETE FROM branch where branch_id = ".$id;
+				$result = $con->query($query);
+			}
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +73,7 @@
 						// output data of each row
 						while($row = $result->fetch_assoc()) {
 							echo "<tr><td>".$row["branch_id"]."</td><td>".$row["branch_name"]."</td>";
-							echo "<td><button name=\"delete_".$row['branch_id']."\">Delete</td>";
-							echo '</tr>';
+							echo "<td><button name=\"delete_".$row['branch_id']."\">Delete</td></tr>";
 						}
 						echo "</table>";
 					} else {
@@ -70,7 +82,6 @@
 				?>
 			</tbody>
 		</table>
-
 		<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->

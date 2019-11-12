@@ -45,8 +45,7 @@
 						// Printing Last response from server
 						echo "<br><br>Server Response: ".$con->error;
 					}else {
-							$error = "Not connected";
-							echo "$error";
+							echo "Not connected";
 					}
 				?>
 			</div>
