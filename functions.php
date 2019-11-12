@@ -124,4 +124,10 @@
 			echo "Error: " . $conn->error;
 		}
 	}
+	function debarr($dmis, $input) {
+		$query = "UPDATE student SET debarred = '".$input "' WHERE mis = '".$dmis "';
+		
+		$result = $con->query($query);
+
+	}
 ?>

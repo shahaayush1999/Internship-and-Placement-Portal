@@ -94,11 +94,11 @@
 						<div class="form-group">
 							<label for="inlineCheckbox3">Offer Open</label><br>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="1" name = "offopen">
+								<input class="form-check-input" type="radio" id="inlineCheckbox3" value="1" name = "offopen">
 								<label class="form-check-label" for="inlineCheckbox3">Yes</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="0" name = "offopen">
+								<input class="form-check-input" type="radio" id="inlineCheckbox3" value="0" name = "offopen">
 								<label class="form-check-label" for="inlineCheckbox3">NO</label>
 							</div>
 						</div>
@@ -154,11 +154,11 @@
 						<div class="form-group">
 							<label for="inlineCheckbox1">Dead Back Allowed</label><br>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1" name = "deadallow">
+								<input class="form-check-input" type="radio" id="inlineCheckbox1" value="1" name = "deadallow">
 								<label class="form-check-label" for="inlineCheckbox1">Yes</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="0" name = "deadallow">
+								<input class="form-check-input" type="radio" id="inlineCheckbox1" value="0" name = "deadallow">
 								<label class="form-check-label" for="inlineCheckbox1">NO</label>
 							</div>
 						</div>
@@ -166,11 +166,11 @@
 					<div class="form-group">
 							<label for="inlineCheckbox2">Live Back Allowed</label><br>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="1" name = "liveallow">
+									<input class="form-check-input" type="radio" id="inlineCheckbox2" value="1" name = "liveallow">
 									<label class="form-check-label" for="inlineCheckbox1">Yes</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="0" name = "liveallow">
+									<input class="form-check-input" type="radio" id="inlineCheckbox2" value="0" name = "liveallow">
 									<label class="form-check-label" for="inlineCheckbox1">NO</label>
 								</div>
 						</div>
