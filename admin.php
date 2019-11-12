@@ -31,23 +31,6 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Link</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Dropdown
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="#">Action</a>
-							<a class="dropdown-item" href="#">Another action</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</div>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link disabled" href="#">Disabled</a>
-					</li>
 				</ul>
 				<a href = "logout.php" class="btn btn-danger my-2 my-sm-0" type="submit">Sign Out</a>
 			</div>
@@ -58,6 +41,7 @@
 				<nav class="navbar navbar-light bg-light justify-content-left">
 					<a class="navbar-brand ">Company Database</a>
 					<a href = "add_comp.php" class="btn btn-primary my-2 my-sm-0" type="submit">Add Company</a>
+					<a href = "job_offer.php" class="btn btn-primary my-2 my-sm-0" type="submit">Add Job Offer</a>
 				</nav>
 				<table class='table table-striped table-bordered'>
 					<thead class="thead-light">

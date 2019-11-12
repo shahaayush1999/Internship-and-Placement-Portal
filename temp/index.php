@@ -6,7 +6,7 @@ $dbname = "internship_portal";
 
 $con = new mysqli($servername, $username, $password, $dbname);
 // Check connection
-if ($conn->connect_error) {
+if ($con->connect_error) {
 	die("Connection failed: " . $con->connect_error);
 }
 if (isset($_POST)) {
@@ -14,11 +14,11 @@ if (isset($_POST)) {
 		if (strstr($key, 'delete')){
 			$id = substr($key, 7);
 			$query = "delete from branch where branch_id = ".$id;
-			$result = $conn->query($query);
+			$result = $con->query($query);
 		}
 	}
 }
 
-$con->close(); 
+$con->close();
 
 ?>

@@ -95,7 +95,7 @@
 		global $con;
 		$query = 'DELETE FROM '.$table_name.' WHERE '.$column_name.' = '.$column_value;
 		$result = $con->query($query);
-		return $con->error;
+		return "sql_delete_query Error: ".$con->error;
 	}
 
 	function sql_select_query($variables, $table_name, $conditions) {
@@ -120,24 +120,25 @@
 			echo "0 results";
 		}
 		if ($con->error != '') {
-			echo "Server Response: ".$con->error;
+			echo "sql_select_query Error: ".$con->error;
 		}
 	}
 
 	function sql_insert_query($key_value_pairs, $table_name) {
-		$inorder_default_values = $inorder_values = "";
+		$inorder_default_values = $inorder_values = array();
 		foreach ($key_value_pairs as $key => $value) {
-			$inorder_default_values = $inorder_default_values . "`, " . $key;
-			$inorder_values = $inorder_values . "`, " . $value;
+			array_push($inorder_default_values, $key);
+			array_push($inorder_values, $value);
 		}
-		$inorder_default_values = "`".$inorder_default_values."`";
-		$inorder_values = "`".$inorder_values."`";
+		$inorder_default_values = "`".join("`, `" , $inorder_default_values)."`";
+		$inorder_values = "'".join("', '" , $inorder_values)."'";
 		$query = "INSERT INTO " . $table_name . " (" . $inorder_default_values . ") VALUES (" . $inorder_values . ")";
+		echo $query;
 		global $con;
 		if ($con->query($query) === TRUE) {
 			echo "New record created successfully";
 		} else {
-			echo "Error: " . $conn->error;
+			echo "sql_insert_query Error: " . $con->error;
 		}
 	}
 
@@ -158,5 +159,22 @@
 		} else {
 			echo "Error undebarring student: ". $mis. ". Reason: " . $con->error;
 		}
+	}
+
+	function student_exists($mis) {
+		$query = "SELECT mis FROM student WHERE mis = ?";
+		global $con;
+		if($stmt = $con->prepare($query)) {
+			$stmt->bind_param("s",$mis);
+			$stmt->execute();
+			$stmt->store_result();
+			$stmt->fetch();
+			if($stmt->num_rows == 1) {
+				$stmt->close();
+				return true;
+			}
+			$stmt->close();
+		}
+		return false;
 	}
 ?>
