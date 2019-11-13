@@ -91,6 +91,9 @@
 		}
 	}
 
+	//TODO Add place_button function
+	//TODO Integrate place_button in sql_select_query
+
 	function sql_delete_query($column_name, $column_value, $table_name) {
 		global $con;
 		$query = 'DELETE FROM '.$table_name.' WHERE '.$column_name.' = '.$column_value;

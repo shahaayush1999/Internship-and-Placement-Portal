@@ -88,16 +88,28 @@
 				<table class='table table-striped table-bordered'>
 					<thead class="thead-dark">
 						<?php
-							$headers = array('Company ID', 'Name', 'Contact Person', 'Number', 'Email');
+							$headers = array('Name', 'Contact Person', 'Number', 'Email', 'Edit');
 							place_cells('th', $headers);
 						?>
 					</thead>
 					<tbody>
 						<?php
-							$variables = array('comp_id', 'comp_name', 'contact_name', 'contact_number', 'contact_email');
-							$table_name = 'company';
-							$conditions = null;
-							sql_select_query($variables, $table_name, $conditions);
+							$sql = 'SELECT `comp_id`, `comp_name`, `contact_name`, `contact_number`, `contact_email` FROM `company`';
+							global $con;
+							$result = $con->query($sql);
+							if ($result->num_rows > 0) {
+								while($row = $result->fetch_assoc()) {
+									echo "<tr>";
+									echo "<td>".$row["comp_name"]."</td><td>".$row["contact_name"]."</td><td>".$row["contact_number"]."</td><td>".$row["contact_email"]."</td>";
+									echo "<td><button name=\"editcompany_".$row['comp_id']."\">Edit</td>";
+									echo "</tr>";
+								}
+							} else {
+								echo "0 results";
+							}
+							if ($con->error != '') {
+								echo "sql_select_query Error: ".$con->error;
+							}
 						?>
 					</tbody>
 				</table>
