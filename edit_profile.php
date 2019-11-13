@@ -23,7 +23,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link btn-primary text-white rounded" href="welcome.php">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link btn-primary text-white rounded" href="redirect.php">Home <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 				<a href = "logout.php" class="btn btn-danger my-2 my-sm-0" type="submit">Sign Out</a>
@@ -54,7 +54,7 @@
 
 					$fname = $mname = $lname = $pnnumber = $email = $live_back = $dead_back = $prev_int = $branch_id = $cgpa = $batch = $year_id = "";
 
-					if(isset($_POST['submit_details']) AND isset($_POST['fname']) AND isset($_POST['pnumber']) AND isset($_POST['branch_id']) AND isset($_POST['cgpa']) AND isset($_POST['batch']) AND isset($_POST['year_id'])) {
+					if(is_post_set(array('submit_details', 'fname', 'pnumber', 'branch_id', 'cgpa', 'batch', 'year_id'))) {
 						if(isset($_POST['fname']))	$fname = $_POST["fname"];
 						if(isset($_POST['lname']))	$lname = $_POST["lname"];
 						if(isset($_POST['mname']))	$mname = $_POST["mname"];

@@ -1,35 +1,10 @@
 <?php
+	include ('session.php');
+	include ('config.php');
+	include ('functions.php');
 
-	include 'config.php';
-
-	if(isset($_POST['return'])) {
-		header("loction: company.php");
-	}
-
-	$offopen = $compid = $jobname = $jobdesc = $stipend = $aptidate = $interviewdate = $mincgpa = $deadallow = $liveallow = $eligiblebranch = $eligibleyear = "";
-
-	if(isset($_POST['offopen'])) $offopen = $_POST["offopen"];
-	if(isset($_POST['compid'])) $compid = $_POST["compid"];
-	if(isset($_POST['jobname'])) $jobname = $_POST["jobname"];
-	if(isset($_POST['jobdesc'])) $jobdesc = $_POST["jobdesc"];
-	if(isset($_POST['stipend'])) $stipend = (int)$_POST["stipend"];
-	if(isset($_POST['aptidate'])) $aptidate = $_POST["aptidate"];
-	if(isset($_POST['deadallow'])) $deadallow = $_POST["deadallow"];
-	if(isset($_POST['interviewdate'])) $interviewdate = $_POST["interviewdate"];
-	if(isset($_POST['mincgpa'])) $mincgpa = (float)$_POST["mincgpa"];
-	if(isset($_POST['liveallow'])) $liveallow = $_POST["liveallow"];
-	if(isset($_POST['eligiblebranch'])) $eligiblebranch = $_POST["eligiblebranch"];
-	if(isset($_POST['eligibleyear'])) $eligibleyear = $_POST["eligibleyear"];
-
-
-	$query = "INSERT INTO `job_offers`(`offer_open`, `comp_id`, `job_profile_name`, `job_desc`, `stripend`, `apti_date`, `interview_date`, `minimum_cgpa`, `dead_back_allowed`, `live_back_allowed`, `eligible_branch_csv`, `eligible_years_csv`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	if($stmt = $con->prepare($query)){
-		$stmt->bind_param("ssssssssssss", $offopen, $compid, $jobname, $jobdesc, $stipend, $aptidate, $interviewdate, $mincgpa, $deadallow, $liveallow, $eligiblebranch, $eligibleyear );
-		$stmt->execute();
-	}
+	if($login_role != 2)	header('location: logout.php');
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -42,11 +17,57 @@
 		<title>Job offers</title>
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">Welcome, <?php echo $login_mis; ?></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link btn-primary text-white rounded" href="redirect.php">Home <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<a href = "logout.php" class="btn btn-danger my-2 my-sm-0" type="submit">Sign Out</a>
+			</div>
+		</nav>
 		<br>
-		<div class="row d-flex justify-content-center">
+		<div class="row d-flex"> <!-- class add justify-content-center if removing debug panel-->
+			<div class="col-md-4">
+					<h2 class="text-center">Processing Panel</h2>
+					<?php
+						$offopen = $compid = $jobname = $jobdesc = $stipend = $aptidate = $interviewdate = $mincgpa = $deadallow = $liveallow = $eligiblebranch = $eligibleyear = "";
+
+						if(isset($_POST['offopen'])) $offopen = $_POST["offopen"];
+						if(isset($_POST['compid'])) $compid = $_POST["compid"];
+						if(isset($_POST['jobname'])) $jobname = $_POST["jobname"];
+						if(isset($_POST['jobdesc'])) $jobdesc = $_POST["jobdesc"];
+						if(isset($_POST['stipend'])) $stipend = (int)$_POST["stipend"];
+						if(isset($_POST['aptidate'])) $aptidate = $_POST["aptidate"];
+						if(isset($_POST['deadallow'])) $deadallow = $_POST["deadallow"];
+						if(isset($_POST['interviewdate'])) $interviewdate = $_POST["interviewdate"];
+						if(isset($_POST['mincgpa'])) $mincgpa = (float)$_POST["mincgpa"];
+						if(isset($_POST['liveallow'])) $liveallow = $_POST["liveallow"];
+						if(isset($_POST['eligiblebranch'])) $eligiblebranch = $_POST["eligiblebranch"];
+						if(isset($_POST['eligibleyear'])) $eligibleyear = $_POST["eligibleyear"];
+
+						if(is_post_set(array('offopen', 'compid', 'jobname'))) {
+							$query = "INSERT INTO `job_offers`(`comp_id`, `offer_open`, `job_profile_name`, `job_desc`, `stripend`, `apti_date`, `interview_date`, `minimum_cgpa`, `dead_back_allowed`, `live_back_allowed`, `eligible_branch_csv`, `eligible_years_csv`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+							if($stmt = $con->prepare($query)){
+								$stmt->bind_param("ssssssssssss", $compid, $offopen, $jobname, $jobdesc, $stipend, $aptidate, $interviewdate, $mincgpa, $deadallow, $liveallow, $eligiblebranch, $eligibleyear );
+								$stmt->execute();
+							}
+						}
+
+						if(isset($_POST['return'])) {
+							header("loction: company.php");
+						}
+					?>
+			</div>
 			<div class="col-md-4 rounded shadow-lg p-3 mb-5 bg-white rounded">
 				<h2 class="text-center">JOB OFFERS</h2>
-				<form method = "post" class="needs-validation" novalidate>
+				<form method = "post" class="needs-validation">
 					<div class="form-row">
 						<div class="col-md-12 mb-3">
 							<label for="compid">Select Company </label>
@@ -160,13 +181,17 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="eligibleyear">Eligible Years</label>
-							<input type="text" name = 'eligibleyear' class="form-control" id = eligibleyear>
+							<!-- <input type="text" name = 'eligibleyear' class="form-control" id = eligibleyear> -->
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+								<label class="custom-control-label" for="defaultUnchecked">Year1</label>
+							</div>
 						</div>
 					</div>
 				</div>
 					<div class="form-row">
 						<div class="col-md-4 mb-3">
-							<button type="submit" name = 'return' class="btn btn-outline-primary">Create</button>
+							<button type="submit" name = 'return' class="btn btn-outline-primary">Create Job Offer</button>
 						</div>
 					</div>
 				</form>

@@ -1,9 +1,11 @@
 <?php
+	include ('config.php');
+	include ('sesion.php');
 
-	include('config.php');
+	if($login_role != 2)	header('location: logout.php');
 
 	$name= $company_name = $email = $number = "";
-	
+
 	$script_should_run = true;
 
 	if(isset($_POST['name']) AND $_POST['name'] != '') $name = $_POST["name"]; else $script_should_run = false;

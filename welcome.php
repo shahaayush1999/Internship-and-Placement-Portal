@@ -1,7 +1,8 @@
 <?php
-	include('session.php');
-	include('config.php');
-	include('functions.php');
+	include ('session.php');
+	include ('config.php');
+	include ('functions.php');
+	include ('redirect_verifier.php');
 
 	if (isset($_POST)) {
 		foreach($_POST as $key => $value) {
@@ -9,6 +10,16 @@
 				$id = substr($key, 7);
 				$query_error = sql_delete_query('branch_id', $id, 'branch');
 				echo $query_error;
+			}
+			if (strstr($key, 'apply')) {
+				if (!is_student_debarred($login_mis)) {
+					$key_value_pairs['job_id'] = substr($key, 6);
+					$key_value_pairs['mis'] = $login_mis;
+					$table_name = 'opted_in_students';
+					sql_insert_query($key_value_pairs, $table_name);
+				} else {
+					echo "Cannot apply for company, you are debarred from placement";
+				}
 			}
 		}
 	}
@@ -40,7 +51,6 @@
 		</nav>
 		<br><br>
 		<div class="row justify-content-center">
-
 			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
 				<nav class="navbar navbar-light bg-light justify-content-left">
 					<a class="navbar-brand ">Open Job Offers</a>
@@ -57,7 +67,7 @@
 						</thead>
 						<tbody>
 							<?php
-								$sql = "SELECT j.`job_id`, c.`comp_name`, j.`job_profile_name`, j.`stipend`, j.`minimum_cgpa`
+								$sql = "SELECT j.`job_id`, c.`comp_name`, c.`comp_id`, j.`job_profile_name`, j.`stipend`, j.`minimum_cgpa`
 										FROM `job_offers` AS j INNER JOIN `company` AS c
 										ON j.`comp_id` = c.`comp_id`
 										WHERE j.`offer_open` = 1";
@@ -82,36 +92,24 @@
 			</div>
 			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
 				<nav class="navbar navbar-light bg-light justify-content-left">
-					<a class="navbar-brand ">Branch Information Reference Table</a>
+					<a class="navbar-brand ">Company Database</a>
 				</nav>
-				<form action="welcome.php" method="POST">
-					<table class="table table-striped">
-						<thead class="thead-dark">
-							<tr>
-								<?php
-									$headers = array('Name', 'Delete');
-									place_cells('th', $headers);
-								?>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-								$sql = "SELECT branch_id, branch_name FROM branch ORDER BY branch_name";
-								$result = $con->query($sql);
-								if ($result->num_rows > 0) {
-									// output data of each row
-									while($row = $result->fetch_assoc()) {
-										echo "<tr><td>".$row["branch_name"]."</td>";
-										echo "<td><button name=\"delete_".$row['branch_id']."\">Delete</td></tr>";
-									}
-									echo "</table>";
-								} else {
-									echo "0 results";
-								}
-							?>
-						</tbody>
-					</table>
-				</form>
+				<table class='table table-striped table-bordered'>
+					<thead class="thead-dark">
+						<?php
+							$headers = array('Company ID', 'Name', 'Contact Person', 'Number', 'Email');
+							place_cells('th', $headers);
+						?>
+					</thead>
+					<tbody>
+						<?php
+							$variables = array('comp_id', 'comp_name', 'contact_name', 'contact_number', 'contact_email');
+							$table_name = 'company';
+							$conditions = null;
+							sql_select_query($variables, $table_name, $conditions);
+						?>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

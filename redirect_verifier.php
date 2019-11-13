@@ -1,5 +1,4 @@
 <?php
-	include('session.php');
 	$url = $_SERVER['REQUEST_URI'];
 
 	if ($login_role == '0') {

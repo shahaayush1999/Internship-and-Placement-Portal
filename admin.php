@@ -1,16 +1,20 @@
 <?php
-	include('session.php');
-	include('config.php');
-	include('functions.php');
+	include ('session.php');
+	include ('config.php');
+	include ('functions.php');
+	include ('redirect_verifier.php');
 
-	if(isset($_POST['add_comp'])) {
-		header("loction: add_comp.php");
-	}
-	if(isset($_POST['debar_mis'])) {
-		debar_student($_POST['debar_mis']);
-	}
-	if(isset($_POST['undebar_mis'])) {
-		undebar_student($_POST['undebar_mis']);
+	if (isset($_POST)) {
+		foreach($_POST as $key => $value) {
+			if (strstr($key, 'delete')){
+				$id = substr($key, 7);
+				$query_error = sql_delete_query('branch_id', $id, 'branch');
+				echo $query_error;
+			}
+			if($key == 'add_comp')	header("loction: add_comp.php");
+			if($key == 'debar_mis')	debar_student($value);
+			if($key == 'undebar_mis')	undebar_student($value);
+		}
 	}
 ?>
 
@@ -29,7 +33,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="redirect.php">Home <span class="sr-only">(current)</span></a>
 					</li>
 				</ul>
 				<a href = "logout.php" class="btn btn-danger my-2 my-sm-0" type="submit">Sign Out</a>
@@ -39,12 +43,50 @@
 		<div class="row justify-content-center">
 			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
 				<nav class="navbar navbar-light bg-light justify-content-left">
-					<a class="navbar-brand ">Company Database</a>
-					<a href = "add_comp.php" class="btn btn-primary my-2 my-sm-0" type="submit">Add Company</a>
+					<a class="navbar-brand ">Open Job Offers</a>
 					<a href = "job_offer.php" class="btn btn-primary my-2 my-sm-0" type="submit">Add Job Offer</a>
 				</nav>
+				<form action="welcome.php" method="POST">
+					<table class="table table-striped">
+						<thead class="thead-dark">
+							<tr>
+								<?php
+									$headers = array('Company', 'Profile', 'Stipend', 'CGPA Criteria', 'Details');
+									place_cells('th', $headers);
+								?>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								$sql = "SELECT j.`job_id`, c.`comp_name`, j.`job_profile_name`, j.`stipend`, j.`minimum_cgpa`
+										FROM `job_offers` AS j INNER JOIN `company` AS c
+										ON j.`comp_id` = c.`comp_id`
+										WHERE j.`offer_open` = 1";
+								$result = $con->query($sql);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										echo "<tr>";
+										echo "<td>".$row["comp_name"]."</td><td>".$row["job_profile_name"]."</td><td>".$row["stipend"]."</td><td>".$row["minimum_cgpa"]."</td>";
+										echo "<td><button name=\"details_".$row['job_id']."\">Details</td>";
+										echo "</tr>";
+									}
+									echo "</table>";
+								} else {
+									echo "0 results";
+								}
+							?>
+						</tbody>
+					</table>
+				</form>
+			</div>
+			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
+				<nav class="navbar navbar-light bg-light justify-content-left">
+					<a class="navbar-brand ">Company Database</a>
+					<a href = "add_comp.php" class="btn btn-primary my-2 my-sm-0" type="submit">Add Company</a>
+				</nav>
 				<table class='table table-striped table-bordered'>
-					<thead class="thead-light">
+					<thead class="thead-dark">
 						<?php
 							$headers = array('Company ID', 'Name', 'Contact Person', 'Number', 'Email');
 							place_cells('th', $headers);
@@ -65,7 +107,7 @@
 					<a class="navbar-brand ">Debarred Students</a>
 				</nav>
 				<table class='table table-striped table-bordered'>
-					<thead class="thead-light">
+					<thead class="thead-dark">
 						<tr>
 							<?php
 								$headers = array('MIS', 'First Name', 'Middle Name', 'Last Name', 'Current Year');
@@ -104,7 +146,7 @@
 					<a class="navbar-brand ">Student Database</a>
 				</nav>
 				<table class="table table-striped table-bordered">
-					<thead class="thead-light">
+					<thead class="thead-dark">
 						<?php
 							$headers = array('MIS', 'Debarred', 'First Name', 'Middle Name', 'Last Name', 'Current Year');
 							place_cells('th', $headers);
@@ -119,6 +161,40 @@
 						?>
 					</tbody>
 				</table>
+			</div>
+
+			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
+				<nav class="navbar navbar-light bg-light justify-content-left">
+					<a class="navbar-brand ">Branch Information Reference Table</a>
+				</nav>
+				<form action="welcome.php" method="POST">
+					<table class="table table-striped">
+						<thead class="thead-dark">
+							<tr>
+								<?php
+									$headers = array('Name', 'Delete');
+									place_cells('th', $headers);
+								?>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								$sql = "SELECT branch_id, branch_name FROM branch ORDER BY branch_name";
+								$result = $con->query($sql);
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										echo "<tr><td>".$row["branch_name"]."</td>";
+										echo "<td><button name=\"delete_".$row['branch_id']."\">Delete</td></tr>";
+									}
+									echo "</table>";
+								} else {
+									echo "0 results";
+								}
+							?>
+						</tbody>
+					</table>
+				</form>
 			</div>
 		</div>
 	</body>

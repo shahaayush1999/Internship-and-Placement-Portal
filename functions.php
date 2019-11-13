@@ -143,21 +143,30 @@
 	}
 
 	function debar_student($mis) {
-		$query = "UPDATE `student` SET `debarred` = 1 WHERE `mis` = ".$mis ;
-		global $con;
-		if ($con->query($query) === TRUE) {
-			echo $mis . " debarred successfully";
+		if(student_exists($mis)) {
+			$query = "UPDATE `student` SET `debarred` = 1 WHERE `mis` = ".$mis ;
+			global $con;
+			if ($con->query($query) === TRUE) {
+				echo $mis . " debarred successfully";
+			} else {
+				echo "Error debarring student: ". $mis. ". Reason: " . $con->error;
+			}
 		} else {
-			echo "Error debarring student: ". $mis. ". Reason: " . $con->error;
+			echo "Invalid MIS: ".$mis." or student not registered";
 		}
 	}
+
 	function undebar_student($mis) {
-		$query = "UPDATE `student` SET `debarred` = 0 WHERE `mis` = ".$mis ;
-		global $con;
-		if ($con->query($query) === TRUE) {
-			echo $mis . " undebarred successfully";
+		if(student_exists($mis)) {
+			$query = "UPDATE `student` SET `debarred` = 0 WHERE `mis` = ".$mis ;
+			global $con;
+			if ($con->query($query) === TRUE) {
+				echo $mis . " undebarred successfully";
+			} else {
+				echo "Error undebarring student: ". $mis. ". Reason: " . $con->error;
+			}
 		} else {
-			echo "Error undebarring student: ". $mis. ". Reason: " . $con->error;
+			echo "Invalid MIS: ".$mis." or student not registered";
 		}
 	}
 
@@ -176,5 +185,39 @@
 			$stmt->close();
 		}
 		return false;
+	}
+
+	function is_post_set($array) {
+		$falseflag = false;
+		foreach ($array as $value) {
+			if(isset($_POST[$value])) {
+				continue;
+			}
+			else {
+				$falseflag = true;
+				break;
+			}
+		}
+		if ($falseflag) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function is_student_debarred($mis) {
+		$query = "SELECT `debarred` FROM `student` WHERE `mis`=".$mis;
+		global $con;
+		$result = $con->query($query);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			if ($row['debarred'] == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			echo "0 results, Error: ".$con->error;
+		}
 	}
 ?>
