@@ -141,7 +141,7 @@
 		if ($con->query($query) === TRUE) {
 			echo "New record created successfully";
 		} else {
-			echo "sql_insert_query Error: " . $con->error;
+			echo "<br>sql_insert_query Error: " . $con->error;
 		}
 	}
 
@@ -193,7 +193,7 @@
 	function is_post_set($array) {
 		$falseflag = false;
 		foreach ($array as $value) {
-			if(isset($_POST[$value])) {
+			if(isset($_POST[$value]) AND $_POST[$value] != "") {
 				continue;
 			}
 			else {

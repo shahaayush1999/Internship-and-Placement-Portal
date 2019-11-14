@@ -36,6 +36,9 @@
 		<div class="row d-flex"> <!-- class add justify-content-center if removing debug panel-->
 			<div class="col-md-4">
 					<h2 class="text-center">Processing Panel</h2>
+					<table>
+						<?php foreach ($_POST as $key => $value) echo "<tr>\n<td>".$key."</td>\n<td>".$value."</td>\n</tr>"; ?>
+					</table>
 					<?php
 						$offopen = $compid = $jobname = $jobdesc = $stipend = $aptidate = $interviewdate = $mincgpa = $deadallow = $liveallow = $eligiblebranch = $eligibleyear = "";
 
@@ -53,15 +56,26 @@
 						if(isset($_POST['eligibleyear'])) $eligibleyear = $_POST["eligibleyear"];
 
 						if(is_post_set(array('offopen', 'compid', 'jobname'))) {
-							$query = "INSERT INTO `job_offers`(`comp_id`, `offer_open`, `job_profile_name`, `job_desc`, `stripend`, `apti_date`, `interview_date`, `minimum_cgpa`, `dead_back_allowed`, `live_back_allowed`, `eligible_branch_csv`, `eligible_years_csv`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-							if($stmt = $con->prepare($query)){
-								$stmt->bind_param("ssssssssssss", $compid, $offopen, $jobname, $jobdesc, $stipend, $aptidate, $interviewdate, $mincgpa, $deadallow, $liveallow, $eligiblebranch, $eligibleyear );
-								$stmt->execute();
-							}
+							$table_name = 'job_offers';
+
+							$key_value_pairs['comp_id'] = $compid;
+							$key_value_pairs['offer_open'] = $offopen;
+							$key_value_pairs['job_profile_name'] = $jobname;
+							$key_value_pairs['job_desc'] = $jobdesc;
+							$key_value_pairs['stipend'] = $stipend;
+							$key_value_pairs['apti_date'] = $aptidate;
+							$key_value_pairs['interview_date'] = $interviewdate;
+							$key_value_pairs['minimum_cgpa'] = $mincgpa;
+							$key_value_pairs['dead_back_allowed'] = $deadallow;
+							$key_value_pairs['live_back_allowed'] = $liveallow;
+							$key_value_pairs['eligible_branch_csv'] = $eligiblebranch;
+							$key_value_pairs['eligible_years_csv'] = $eligibleyear;
+
+							sql_insert_query($key_value_pairs, $table_name);
 						}
 
 						if(isset($_POST['return'])) {
-							header("loction: company.php");
+							header("location: admin.php");
 						}
 					?>
 			</div>
@@ -95,103 +109,99 @@
 							</div>
 						</div>
 					</div>
-				<div class="form-row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="jobname">Job Name</label>
-							<input type="text" name = 'jobname' class="form-control" id = "jobname">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="jobdesc">Job Description</label>
-							<input type="text" name = 'jobdesc' class="form-control" id = "jobdesc">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="stipend">Stipend Amount</label>
-							<input type="text" name = 'stipend' class="form-control" id = "stipend">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="aptidate">Aptitude Date</label>
-							<input type="date" name = 'aptidate' class="form-control" id = "aptidate">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="interviewdate">Interview Date</label>
-							<input type="date" name = 'interviewdate' class="form-control" id = "interviewdate">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="mincgpa">Minimum CGPA</label>
-							<input type="text" name = 'mincgpa' class="form-control" id = "mincgpa">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="inlineCheckbox1">Dead Back Allowed</label><br>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" id="inlineCheckbox1" value="1" name = "deadallow">
-								<label class="form-check-label" for="inlineCheckbox1">Yes</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" id="inlineCheckbox1" value="0" name = "deadallow">
-								<label class="form-check-label" for="inlineCheckbox1">No</label>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 mr-3">
-						<div class="form-group">
-							<label for="inlineCheckbox2">Live Back Allowed</label><br>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" id="inlineCheckbox2" value="1" name = "liveallow">
-								<label class="form-check-label" for="inlineCheckbox1">Yes</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" id="inlineCheckbox2" value="0" name = "liveallow">
-								<label class="form-check-label" for="inlineCheckbox1">No</label>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="eligiblebranch">Eligible Branches</label>
-							<input type="text" name = 'eligiblebranch' class="form-control" id = "eligiblebranch">
-						</div>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label for="eligibleyear">Eligible Years</label>
-							<!-- <input type="text" name = 'eligibleyear' class="form-control" id = eligibleyear> -->
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-								<label class="custom-control-label" for="defaultUnchecked">Year1</label>
-							</div>
-						</div>
-					</div>
-				</div>
 					<div class="form-row">
-						<div class="col-md-4 mb-3">
-							<button type="submit" name = 'return' class="btn btn-outline-primary">Create Job Offer</button>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="jobname">Job Name</label>
+								<input type="text" name = 'jobname' class="form-control" id = "jobname">
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="jobdesc">Job Description</label>
+								<input type="text" name = 'jobdesc' class="form-control" id = "jobdesc">
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="stipend">Stipend Amount</label>
+								<input type="text" name = 'stipend' class="form-control" id = "stipend">
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="aptidate">Aptitude Date</label>
+								<input type="date" name = 'aptidate' class="form-control" id = "aptidate">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="interviewdate">Interview Date</label>
+								<input type="date" name = 'interviewdate' class="form-control" id = "interviewdate">
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="mincgpa">Minimum CGPA</label>
+								<input type="text" name = 'mincgpa' class="form-control" id = "mincgpa">
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="inlineCheckbox1">Dead Back Allowed</label><br>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="inlineCheckbox1" value="1" name = "deadallow">
+									<label class="form-check-label" for="inlineCheckbox1">Yes</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="inlineCheckbox1" value="0" name = "deadallow">
+									<label class="form-check-label" for="inlineCheckbox1">No</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 mr-3">
+							<div class="form-group">
+								<label for="inlineCheckbox2">Live Back Allowed</label><br>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="inlineCheckbox2" value="1" name = "liveallow">
+									<label class="form-check-label" for="inlineCheckbox1">Yes</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="radio" id="inlineCheckbox2" value="0" name = "liveallow">
+									<label class="form-check-label" for="inlineCheckbox1">No</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="eligiblebranch">Eligible Branches</label>
+								<input type="text" name = 'eligiblebranch' class="form-control" id = "eligiblebranch">
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="eligibleyear">Eligible Years</label>
+								<input type="text" name = 'eligibleyear' class="form-control" id = eligibleyear>
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-12 mb-3">
+							<button type="submit" name = 'return' class="btn btn-primary btn-block">Create Job Offer</button>
 						</div>
 					</div>
 				</form>

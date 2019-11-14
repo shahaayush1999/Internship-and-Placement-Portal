@@ -11,7 +11,7 @@
 				$query_error = sql_delete_query('branch_id', $id, 'branch');
 				echo $query_error;
 			}
-			if($key == 'add_comp')	header("loction: add_comp.php");
+			if($key == 'add_company')	header("location: add_company.php");
 			if($key == 'debar_mis')	debar_student($value);
 			if($key == 'undebar_mis')	undebar_student($value);
 		}
@@ -51,7 +51,7 @@
 						<thead class="thead-dark">
 							<tr>
 								<?php
-									$headers = array('Company', 'Profile', 'Stipend', 'CGPA Criteria', 'Details');
+									$headers = array('Company', 'Profile', 'Stipend', 'CGPA Criteria'); //'Details'
 									place_cells('th', $headers);
 								?>
 							</tr>
@@ -68,7 +68,7 @@
 									while($row = $result->fetch_assoc()) {
 										echo "<tr>";
 										echo "<td>".$row["comp_name"]."</td><td>".$row["job_profile_name"]."</td><td>".$row["stipend"]."</td><td>".$row["minimum_cgpa"]."</td>";
-										echo "<td><button name=\"details_".$row['job_id']."\">Details</td>";
+										//echo "<td><button name=\"details_".$row['job_id']."\">Details</td>";
 										echo "</tr>";
 									}
 									echo "</table>";
@@ -83,12 +83,12 @@
 			<div class="col-md-10 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
 				<nav class="navbar navbar-light bg-light justify-content-left">
 					<a class="navbar-brand ">Company Database</a>
-					<a href = "add_comp.php" class="btn btn-primary my-2 my-sm-0" type="submit">Add Company</a>
+					<a href = "add_company.php" class="btn btn-primary my-2 my-sm-0" type="submit" name="add_company">Add Company</a>
 				</nav>
 				<table class='table table-striped table-bordered'>
 					<thead class="thead-dark">
 						<?php
-							$headers = array('Name', 'Contact Person', 'Number', 'Email', 'Edit');
+							$headers = array('Name', 'Contact Person', 'Number', 'Email'); // 'Edit'
 							place_cells('th', $headers);
 						?>
 					</thead>
@@ -101,7 +101,7 @@
 								while($row = $result->fetch_assoc()) {
 									echo "<tr>";
 									echo "<td>".$row["comp_name"]."</td><td>".$row["contact_name"]."</td><td>".$row["contact_number"]."</td><td>".$row["contact_email"]."</td>";
-									echo "<td><button name=\"editcompany_".$row['comp_id']."\">Edit</td>";
+									//echo "<td><button name=\"editcompany_".$row['comp_id']."\">Edit</td>";
 									echo "</tr>";
 								}
 							} else {
